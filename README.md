@@ -90,3 +90,32 @@ docker network inspect custom
 ```shell script
 docker run --network=custom
 ```
+
+### Способы создания Docker-образов
+
+1) Создание образа из контейнера: 
+```shell
+docker run -it --name image-from-container ubuntu:14.04
+# внутри контейнера
+  cd root
+  echo mytext > test
+  exit
+docker commit --change='ENTRYPOINT ["/usr/bin/python3"]' image-from-container myimage
+docker run -it --rm myimage
+docker history myimage
+```
+
+2) Создание образа с помощью Dockerfile:
+```dockerfile
+FROM ubuntu:14.04
+
+LABEL maintainer='Sharafutdinov Ruslan'
+
+ENTRYPOINT ['/usr/bin/python3']
+```
+```shell
+docker build -t image-from-dockerfile .
+docker run -it --rm image-from-dockerfile
+```
+
+Про особенности можно почитать тут: https://habr.com/ru/company/southbridge/blog/329138/

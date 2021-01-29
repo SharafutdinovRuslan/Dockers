@@ -1,0 +1,17 @@
+# Базовый образ – ubuntu:16.04
+FROM ubuntu:16.04
+
+
+ARG UID=1000
+# Установлен текстовый редактор nano
+RUN apt-get update && \
+    apt-get install -y nano && \
+    useradd -u $UID stepik
+
+ENV EDITOR="/bin/nano"
+USER stepik
+
+VOLUME /home/stepik
+WORKDIR /home/stepik
+
+ENTRYPOINT ["bash", "-c", "$EDITOR", "-t"]
