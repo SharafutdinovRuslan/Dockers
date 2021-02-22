@@ -94,7 +94,7 @@ docker run -mount {путь в файловой системе хоста}:{пу
 data volumes, после чего можно использовать тома из этого контейнера. 
 
 Такой подход удобен в случае если нам нужно обеспечить возможность работать с данными
-из нескольких контейнеров или персистентных данных.
+из нескольких контейнеров или для хранения персистентных данных.
 
 Пример:
 ```shell script
@@ -181,6 +181,7 @@ docker run -it --rm image-from-dockerfile
 ```
 
 [Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
+
 [Best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
 
 Про особенности CMD и ENTRYPOINT можно почитать [тут](https://habr.com/ru/company/southbridge/blog/329138/)
