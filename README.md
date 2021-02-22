@@ -184,4 +184,6 @@ docker run -it --rm image-from-dockerfile
 
 [Best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
 
-Про особенности CMD и ENTRYPOINT можно почитать [тут](https://habr.com/ru/company/southbridge/blog/329138/)
+[Особенности работы CMD и ENTRYPOINT](https://habr.com/ru/company/southbridge/blog/329138/)
+
+[CMD и ENTRYPOINT. Документация](https://docs.docker.com/engine/reference/builder/#entrypoint)
