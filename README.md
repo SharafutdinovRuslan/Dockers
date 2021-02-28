@@ -187,3 +187,23 @@ docker run -it --rm image-from-dockerfile
 [Особенности работы CMD и ENTRYPOINT](https://habr.com/ru/company/southbridge/blog/329138/)
 
 [CMD и ENTRYPOINT. Документация](https://docs.docker.com/engine/reference/builder/#entrypoint)
+
+
+### Docker Hub
+
+Предпочтительнее использовать образы с приставкой alpine, т.к из этих образов убраны все ненужные зависимости
+и вследствие чего они меньше весят
+
+
+### Docker-compose
+
+Файл docker-compose.yml используется для описания запуска приложений, 
+использующих несколько контейнеров
+
+[Compose file version 3 reference](https://docs.docker.com/compose/compose-file/compose-file-v3/)
+
+**Команды:**
+
+* docker-compose build - выполнить команду build для всех сервисов
+* docker-compose up - запустить контейнеры
+* docker logs ${имя сервиса} - вывести логи конкретного сервиса

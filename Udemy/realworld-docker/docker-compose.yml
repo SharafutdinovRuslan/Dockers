@@ -1,0 +1,79 @@
+version: '3' # версия docker-compose
+
+services:
+  frontend:
+    build: ./frontend
+    container_name: realworld-docker-frontend
+    command: serve -s build -l 3000
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    networks:
+      - realworld-docker-network
+
+  api:
+    build: ./api # путь для Dockerfile данного сервиса
+    container_name: realworld-docker-api # имя контейнера, будет отображаться например в docker ps
+    command: npm run start # команда, которая полнится при старте сервиса
+    restart: unless-stopped # если сервис упал, docker-compose попробует запустить контейнер заново
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - HOST=http://realworld-docker.com
+      - MONGO_URL=mongodb://api_db:27017/api
+      - AUTH_API_URL=http://auth:3002/api
+    depends_on:
+      - api_db
+    networks:
+      - realworld-docker-network
+
+  auth:
+    build: ./auth
+    container_name: realworld-docker-auth
+    command: npm run start
+    restart: unless-stopped
+    ports:
+      - "3002:3002"
+    environment:
+      - PORT=3002
+      - HOST=http://realworld-docker.com
+      - MONGO_URL=mongodb://auth_db:27017/api
+    networks:
+      - realworld-docker-network
+
+  api_db:
+    image: mongo:latest
+    container_name: realworld-docker-api-db
+    volumes:
+      - mongodb_api:/data/db
+    networks:
+      - realworld-docker-network
+
+  auth_db:
+    image: mongo:latest
+    container_name: realworld-docker-auth-db
+    volumes:
+      - mongodb_auth:/data/db
+    networks:
+      - realworld-docker-network
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: realworld-docker-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf.prod:/etc/nginx/conf.d/nginx.conf
+    depends_on:
+      - frontend
+    networks:
+      - realworld-docker-network
+
+volumes:
+  mongodb_api:
+  mongodb_auth:
+
+networks:
+  realworld-docker-network:
+    driver: bridge
